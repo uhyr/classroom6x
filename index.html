@@ -60,6 +60,13 @@
       text-align: center;
       font-size: 0.9rem;
     }
+
+    #gameContainer {
+      width: 100%;
+      height: 600px;
+      background: #000;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -82,6 +89,20 @@
     <p>
       Looking for competitive fun? <strong>1v1.lol unblocked classroom 6x</strong> is one of the most played games on the site. Test your reflexes and strategy while staying under the radar.
     </p>
+
+    <!-- Ultimate Game Stash file -->
+    <!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
+
+    <div class="webgl-content">
+      <div id="gameContainer">
+        <canvas id="canvas" style="width: 100%; height: 100%; cursor: default;"></canvas>
+        <div class="logo Dark" style="display: none;"></div>
+        <div class="progress Dark" style="display: none;">
+          <div class="empty" style="width: 0%;"></div>
+          <div class="full" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer>
@@ -94,5 +115,49 @@
       &copy; 2025 Classroom6X (https://uhyr.github.io/classroom6x/) - All rights reserved.
     </div>
   </footer>
+
+  <!-- Unity and Firebase Scripts -->
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/UnityProgress.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/2.7.js"></script>
+  <script type="text/javascript">
+    var gameInstance;
+    window.onload = function () {
+      gameInstance = UnityLoader.instantiate("gameContainer", "https://cdn.jsdelivr.net/gh/n-101-1/1@main/2.7.json", {
+        onProgress: UnityProgress,
+        Module: {
+          onRuntimeInitialized: function () {
+            UnityProgress(gameInstance, "complete");
+          },
+        },
+      });
+    };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/1firebase-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/1firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/1firebase-firestore.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/1firebase.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/1login.js?v=2"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n-101-1/1@main/1firestore.js"></script>
+
+  <script>
+    initializeFireBase();
+
+    function showAds() {
+      // ads disabled
+    }
+
+    function requestNewAd() {
+      // ads disabled
+    }
+
+    function unityAdFinishedCallback() {
+      try {
+        if (gameInstance) gameInstance.SendMessage("AdsManager", "OnWebCallback");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  </script>
 </body>
 </html>
